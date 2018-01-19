@@ -1,0 +1,26 @@
+---
+title: "Real Time Transit Predictions"
+author: "Kailin Lu"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r}
+library(BayArea511r)
+```
+
+We can retrieve predicted arrivals at stops for both a single stop as well as for all stops within an operator system. 
+
+For a single stop, we will directly call the stop prediction API. Data includes estimated arrival time, estimated vehicle position, as well as a timestamp of when estimates were last updated. 
+
+```{r}
+# Must specify operator ID and stop ID 
+prediction <- get_realtime_predictions_for_stop(operator_id='AC', stop_id=53326)
+prediction
+```
+
+To retrieve all stops for a particular operator, use the `get_realtime_predictions_for_operator(operator_id)` function. Note that default limiting is currently set to 1000 stops to help with API limits. 

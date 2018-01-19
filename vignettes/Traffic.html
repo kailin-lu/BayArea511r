@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Kailin Lu" />
+
+<meta name="date" content="2017-12-15" />
+
+<title>Bay Area 511 Traffic</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Bay Area 511 Traffic</h1>
+<h4 class="author"><em>Kailin Lu</em></h4>
+<h4 class="date"><em>2017-12-15</em></h4>
+
+
+
+<div id="description" class="section level2">
+<h2>Description</h2>
+<p>The Traffic Events API provides data about traffic incidences in the Bay Area. Incidences may be planned or un-planned. Examples of planned incidences include construction work or scheduled special events that involve road closures.</p>
+<p>Events contain a status which is either ‘ACTIVE’ if the incident is still occurring, or ‘ARCHIVED’ if it has concluded in the past. Filtering by ‘ALL’ will return both ‘ACTIVE’ and ‘ARCHIVED’ events.</p>
+</div>
+<div id="examples" class="section level2">
+<h2>Examples</h2>
+<p>By default, the API will return events updated during the current day. The type of event can be found under <code>event_type</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(BayArea511r)
+events &lt;-<span class="st"> </span><span class="kw">traffic_events</span>()</code></pre></div>
+<pre><code>## [1] 200</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(events)</code></pre></div>
+<pre><code>##                               url
+## 1: /traffic/events/511.org/105877
+## 2: /traffic/events/511.org/113553
+## 3: /traffic/events/511.org/129962
+## 4: /traffic/events/511.org/192477
+## 5: /traffic/events/511.org/196504
+## 6: /traffic/events/511.org/197674
+##                             jurisdiction_url             id status
+## 1: http://api.511.org/jurisdictions/511.org/ 511.org/105877 ACTIVE
+## 2: http://api.511.org/jurisdictions/511.org/ 511.org/113553 ACTIVE
+## 3: http://api.511.org/jurisdictions/511.org/ 511.org/129962 ACTIVE
+## 4: http://api.511.org/jurisdictions/511.org/ 511.org/192477 ACTIVE
+## 5: http://api.511.org/jurisdictions/511.org/ 511.org/196504 ACTIVE
+## 6: http://api.511.org/jurisdictions/511.org/ 511.org/197674 ACTIVE
+##                                                                                                                                                                  headline
+## 1:        Caltrans : Long-term construction on Van Ness Ave Northbound between Market St (San Francisco) and Lombard St (San Francisco). Left lane closed. Expect delays.
+## 2: Caltrans : Emergency road closure on CA-35 Northbound and Southbound between CA-9 (Los Gatos) and Black Rd (Los Gatos). Lanes closed. Consider using alternate routes.
+## 3:                                                      Caltrans : Long-term construction on CA-13 Southbound north of I-580 E (Oakland). Off Ramp closed. Expect delays.
+## 4:                                                   Caltrans : Long-term construction on I-880 Northbound exiting at 29TH Ave (Oakland). Off Ramp closed. Expect delays.
+## 5:            Caltrans : Long-term construction on CA-1 Northbound and Southbound north of Gravenstein Hwy (Valley Ford). Lane closed. One way traffic control in effect.
+## 6:             Caltrans : Long-term construction on CA-1 Northbound and Southbound area of Gravenstein Hwy (Valley Ford). Lane closed. One way traffic control in effect.
+##      event_type severity           created           updated
+## 1: CONSTRUCTION  UNKNOWN 2016-12-20T05:01Z 2017-12-15T20:22Z
+## 2: CONSTRUCTION  UNKNOWN 2017-10-01T18:05Z 2017-12-15T20:23Z
+## 3: CONSTRUCTION  UNKNOWN 2017-03-22T13:49Z 2017-12-15T20:24Z
+## 4: CONSTRUCTION  UNKNOWN 2017-08-07T12:01Z 2017-12-15T20:25Z
+## 5: CONSTRUCTION  UNKNOWN 2017-08-16T13:50Z 2017-12-15T20:25Z
+## 6: CONSTRUCTION  UNKNOWN 2017-08-18T18:50Z 2017-12-15T20:25Z
+##    geography.type geography.crs.type         geography.crs.name
+## 1:          Point               name urn:ogc:def:crs:EPSG::4326
+## 2:          Point               name urn:ogc:def:crs:EPSG::4326
+## 3:          Point               name urn:ogc:def:crs:EPSG::4326
+## 4:          Point               name urn:ogc:def:crs:EPSG::4326
+## 5:          Point               name urn:ogc:def:crs:EPSG::4326
+## 6:          Point               name urn:ogc:def:crs:EPSG::4326
+##    geography.coordinates   roads.name      roads.from   roads.to
+## 1:   -122.41916,37.77512 Van Ness Ave       Market St Lombard St
+## 2:   -122.12228,37.25858      CA-35 N            CA-9   Black Rd
+## 3:  -122.179688,37.78606      CA-13 S         I-580 E         NA
+## 4: -122.231568,37.774572      I-880 N        29TH Ave         NA
+## 5: -123.104664,38.437012       CA-1 N Gravenstein Hwy         NA
+## 6: -123.104664,38.437012       CA-1 N Gravenstein Hwy         NA
+##    roads.state                           intervals
+## 1:        Open 2016-12-20T05:01Z/2018-12-31T14:01Z
+## 2:        Open 2017-10-01T18:05Z/2018-01-16T07:55Z
+## 3:        Open 2017-03-22T13:49Z/2017-12-31T13:00Z
+## 4:        Open 2017-08-07T12:01Z/2018-07-01T07:01Z
+## 5:        Open 2017-08-16T13:50Z/2018-01-31T16:00Z
+## 6:        Open 2017-08-18T18:50Z/2018-02-01T02:00Z</code></pre>
+<p>Events returned can be filtered by fields such as event_type and the status</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">events_filtered &lt;-<span class="st"> </span><span class="kw">traffic_events</span>(<span class="dt">status=</span><span class="st">'ACTIVE'</span>, <span class="dt">event_type=</span><span class="st">'CONSTRUCTION'</span>)</code></pre></div>
+<pre><code>## [1] 200</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(events_filtered)</code></pre></div>
+<pre><code>##                               url
+## 1: /traffic/events/511.org/105877
+## 2: /traffic/events/511.org/113553
+## 3: /traffic/events/511.org/129962
+## 4: /traffic/events/511.org/192477
+## 5: /traffic/events/511.org/196504
+## 6: /traffic/events/511.org/197674
+##                             jurisdiction_url             id status
+## 1: http://api.511.org/jurisdictions/511.org/ 511.org/105877 ACTIVE
+## 2: http://api.511.org/jurisdictions/511.org/ 511.org/113553 ACTIVE
+## 3: http://api.511.org/jurisdictions/511.org/ 511.org/129962 ACTIVE
+## 4: http://api.511.org/jurisdictions/511.org/ 511.org/192477 ACTIVE
+## 5: http://api.511.org/jurisdictions/511.org/ 511.org/196504 ACTIVE
+## 6: http://api.511.org/jurisdictions/511.org/ 511.org/197674 ACTIVE
+##                                                                                                                                                                  headline
+## 1:        Caltrans : Long-term construction on Van Ness Ave Northbound between Market St (San Francisco) and Lombard St (San Francisco). Left lane closed. Expect delays.
+## 2: Caltrans : Emergency road closure on CA-35 Northbound and Southbound between CA-9 (Los Gatos) and Black Rd (Los Gatos). Lanes closed. Consider using alternate routes.
+## 3:                                                      Caltrans : Long-term construction on CA-13 Southbound north of I-580 E (Oakland). Off Ramp closed. Expect delays.
+## 4:                                                   Caltrans : Long-term construction on I-880 Northbound exiting at 29TH Ave (Oakland). Off Ramp closed. Expect delays.
+## 5:            Caltrans : Long-term construction on CA-1 Northbound and Southbound north of Gravenstein Hwy (Valley Ford). Lane closed. One way traffic control in effect.
+## 6:             Caltrans : Long-term construction on CA-1 Northbound and Southbound area of Gravenstein Hwy (Valley Ford). Lane closed. One way traffic control in effect.
+##      event_type severity           created           updated
+## 1: CONSTRUCTION  UNKNOWN 2016-12-20T05:01Z 2017-12-15T20:22Z
+## 2: CONSTRUCTION  UNKNOWN 2017-10-01T18:05Z 2017-12-15T20:23Z
+## 3: CONSTRUCTION  UNKNOWN 2017-03-22T13:49Z 2017-12-15T20:24Z
+## 4: CONSTRUCTION  UNKNOWN 2017-08-07T12:01Z 2017-12-15T20:25Z
+## 5: CONSTRUCTION  UNKNOWN 2017-08-16T13:50Z 2017-12-15T20:25Z
+## 6: CONSTRUCTION  UNKNOWN 2017-08-18T18:50Z 2017-12-15T20:25Z
+##    geography.type geography.crs.type         geography.crs.name
+## 1:          Point               name urn:ogc:def:crs:EPSG::4326
+## 2:          Point               name urn:ogc:def:crs:EPSG::4326
+## 3:          Point               name urn:ogc:def:crs:EPSG::4326
+## 4:          Point               name urn:ogc:def:crs:EPSG::4326
+## 5:          Point               name urn:ogc:def:crs:EPSG::4326
+## 6:          Point               name urn:ogc:def:crs:EPSG::4326
+##    geography.coordinates   roads.name      roads.from   roads.to
+## 1:   -122.41916,37.77512 Van Ness Ave       Market St Lombard St
+## 2:   -122.12228,37.25858      CA-35 N            CA-9   Black Rd
+## 3:  -122.179688,37.78606      CA-13 S         I-580 E         NA
+## 4: -122.231568,37.774572      I-880 N        29TH Ave         NA
+## 5: -123.104664,38.437012       CA-1 N Gravenstein Hwy         NA
+## 6: -123.104664,38.437012       CA-1 N Gravenstein Hwy         NA
+##    roads.state                           intervals
+## 1:        Open 2016-12-20T05:01Z/2018-12-31T14:01Z
+## 2:        Open 2017-10-01T18:05Z/2018-01-16T07:55Z
+## 3:        Open 2017-03-22T13:49Z/2017-12-31T13:00Z
+## 4:        Open 2017-08-07T12:01Z/2018-07-01T07:01Z
+## 5:        Open 2017-08-16T13:50Z/2018-01-31T16:00Z
+## 6:        Open 2017-08-18T18:50Z/2018-02-01T02:00Z</code></pre>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

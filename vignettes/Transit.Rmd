@@ -1,0 +1,49 @@
+---
+title: "Bay Area 511 Transit Data"
+author: "Kailin Lu"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Description
+
+Transit APIs describe the Bay Area's transit system operators, stops, announcements, and lines 
+
+```{r}
+library(BayArea511r)
+```
+
+## Operators
+
+For a list of agencies currently operating in the Bay Area, use the `get_operators()`. 
+
+```{r}
+operators <- get_operators()
+head(operators)
+```
+
+One useful column in the resulting DataFrame is the `id` column which gives the operator or agency ID. This ID can then be used as a filtering paramter for other API calls. 
+
+Agencies which can be tracked real-time are those with `Monitored == TRUE`. 
+
+## Stops 
+
+Bay Area 511 provides two APIs which describe transit stop locations. The first which can be accessed using `get_stops()` is the more simple. The `id` column returned is the stop_id or stopCode which can be referenced as a filtering parameter in other transit APIs. 
+
+```{r}
+stops <- get_stops(operator_id='AC')
+head(stops)
+```
+
+## Lines 
+
+We can also retrieve the names of routes (lines) by operator ID 
+
+```{r}
+lines <- get_lines(operator_id='AC')
+head(lines)
+```

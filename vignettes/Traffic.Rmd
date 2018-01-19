@@ -1,0 +1,38 @@
+---
+title: "Bay Area 511 Traffic"
+author: "Kailin Lu"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Description 
+
+The Traffic Events API provides data about traffic incidences in the Bay Area. Incidences may be planned or un-planned. Examples of planned incidences include construction work or scheduled special events that involve road closures. 
+
+Events contain a status which is either 'ACTIVE' if the incident is still occurring, or 'ARCHIVED' if it has concluded in the past. Filtering by 'ALL' will return both 'ACTIVE' and 'ARCHIVED' events. 
+
+## Examples 
+
+By default, the API will return events updated during the current day. The type of event can be found under `event_type`. 
+
+```{r}
+library(BayArea511r)
+events <- traffic_events()
+head(events)
+```
+
+Events returned can be filtered by fields such as event_type and the status 
+
+```{r}
+events_filtered <- traffic_events(status='ACTIVE', event_type='CONSTRUCTION')
+head(events_filtered)
+```
+
+
+
+
+
